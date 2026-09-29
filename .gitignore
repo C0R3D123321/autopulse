@@ -1,0 +1,11 @@
+.vercel
+android/.gradle
+android/build
+android/app/build
+AutoPulse-*.apk
+_site/
+test-results/
+node_modules/
+*.keystore
+*.jks
+.env*

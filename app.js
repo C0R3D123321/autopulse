@@ -43,7 +43,7 @@
     const fresh = defaultState();
     const savedItems = Array.isArray(saved.items) ? saved.items : [];
     const builtIn = fresh.items.map(base => ({ ...base, ...(savedItems.find(item => item.id === base.id) || {}) }));
-    const custom = savedItems.filter(item => item.custom === true && !builtIn.some(base => base.id === item.id));
+    const custom = savedItems.filter(item => item.custom === true && Array.isArray(item.records) && item.records.length > 0 && !builtIn.some(base => base.id === item.id));
     return { ...fresh, ...saved, vehicle: { ...fresh.vehicle, ...(saved.vehicle || {}) }, items: [...builtIn, ...custom] };
   }
   async function persistState(value) { const db = await openDb(); return new Promise((resolve, reject) => { const req = db.transaction('state', 'readwrite').objectStore('state').put(value, 'current'); req.onsuccess = resolve; req.onerror = () => reject(req.error); }); }
